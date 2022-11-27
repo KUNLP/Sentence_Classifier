@@ -61,7 +61,6 @@ All code only supports running on Linux.
 
 * 입력 문장 쌍에 대한 어절 단위 의존 구문 구조를 가진 데이터(data/origin/DP_origin_preprocess.json)에 대하여 학습 데이터와 평가 데이터를 세부분류별 4:1 비율로 나누기(data/origin/merge_origin_preprocess/new_train.json, (data/origin/merge_origin_preprocess/new_test.json))
 
-* [bert/init_weight](https://huggingface.co/klue/bert-base)의 vocab.json에 청크 단위로 구분해주는 스폐셜 토큰(Special Token) *[<WORD>] 추가
 
 ## Train & Test
 
