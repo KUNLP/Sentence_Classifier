@@ -1,3 +1,4 @@
+# 해당 코드는 아래 링크에서 가져옴
 # https://github.com/allenai/allennlp/blob/master/allennlp/nn/util.py
 
 import torch
