@@ -92,8 +92,8 @@ def create_model(args):
             './KorSciBERT/pytorch_model.bin',
             config=config)
 
-    model = Baseline(
-    # model = LMForSequenceClassification(
+    # model = Baseline(
+    model = LMForSequenceClassification( # proposed model
     # model = LMForSequenceClassification_softmax(
     # model = LMForSequenceClassification_only_HierarchicalAttn(
     # model = LMForSequenceClassification_only_LabelAttn(
@@ -110,26 +110,6 @@ def create_model(args):
 
     if not args.from_init_weight: model.load_state_dict(torch.load(os.path.join(args.output_dir, "model/checkpoint-{}/pytorch.pt".format(args.checkpoint))))
     # print(model)
-
-    model.to(args.device)
-
-    # vocab 추가
-    # 중요 단어의 UNK 방지 및 tokenize를 방지해야하는 경우(HTML 태그 등)에 활용
-    # "세종대왕"이 OOV인 경우 ['세종대왕'] --tokenize-->  ['UNK'] (X)
-    # html tag인 [td]는 tokenize가 되지 않아야 함. (완전한 tag의 형태를 갖췄을 때, 의미를 갖기 때문)
-    #                             ['[td]'] --tokenize-->  ['[', 't', 'd', ']'] (X)
-
-    if args.from_init_weight and args.add_vocab:
-        if args.from_init_weight:
-            add_token = {
-                "additional_special_tokens": ["[WORD]"]
-                }
-            # 추가된 단어는 tokenize 되지 않음
-            # ex
-            # '[td]' vocab 추가 전 -> ['[', 't', 'd', ']']
-            # '[td]' vocab 추가 후 -> ['[td]']
-            tokenizer.add_special_tokens(add_token)
-            model.resize_token_embeddings(len(tokenizer))
 
     model.to(args.device)
     return model, tokenizer
@@ -175,8 +155,8 @@ if __name__ == '__main__':
 
     #------------------------------------------------------------------------------------------------
     # cli_parser.add_argument("--data_dir", type=str, default="./data")
-    # cli_parser.add_argument("--data_dir", type=str, default="./data/origin/merge_origin_preprocess")
-    cli_parser.add_argument("--data_dir", type=str, default="./data/origin/merge_origin_preprocess_woCNJ")
+    cli_parser.add_argument("--data_dir", type=str, default="./data/origin/merge_origin_preprocess")
+
 
     # # word unit
     # cli_parser.add_argument("--train_file", type=str, default='new_train.json')
@@ -195,44 +175,8 @@ if __name__ == '__main__':
     # KorSciBERT
     cli_parser.add_argument("--model_name_or_path", type=str, default='./KorSciBERT/model')
     cli_parser.add_argument("--cache_dir", type=str, default='./KorSciBERT/model')
-    # cli_parser.add_argument("--output_dir", type=str, default="./KorSciBERT/graph")
-    # cli_parser.add_argument("--output_dir", type=str, default="./KorSciBERT/graph_multiview2")
-    # cli_parser.add_argument("--output_dir", type=str, default="./KorSciBERT/graph_rgcn")
-    # cli_parser.add_argument("--output_dir", type=str, default="./KorSciBERT/graph_concat")
-    # cli_parser.add_argument("--output_dir", type=str, default="./KorSciBERT/graph_concat2")
-
-    # cli_parser.add_argument("--output_dir", type=str, default="./KorSciBERT/first_chunk/graph_rgcn")
-    # cli_parser.add_argument("--output_dir", type=str, default="./KorSciBERT/wo_LAN/graph_rgcn") # acc:89.78 # F1: 90.07
-
-    # cli_parser.add_argument("--output_dir", type=str, default="./KorSciBERT/cls/multi_loss/graph_concat_bilstm_coarse_alpha")
-    # cli_parser.add_argument("--output_dir", type=str, default="./KorSciBERT/cls/graph_concat_bilstm_coarse_alpha_again")
-    # cli_parser.add_argument("--output_dir", type=str, default="./KorSciBERT/cls/softmax/graph_concat_coarse_alpha_again")
-    # cli_parser.add_argument("--output_dir", type=str, default="./KorSciBERT/cls/graph_concat_coarse_alpha_again") # acc: 89.94, F1: 90.22
-    # cli_parser.add_argument("--output_dir", type=str, default="./KorSciBERT/max_pooling/graph_concat_coarse_alpha") # acc: 89.91, F1: 90.20
-    # cli_parser.add_argument("--output_dir", type=str, default="./KorSciBERT/cls/graph_concat")
-
-    # cli_parser.add_argument("--output_dir", type=str, default="./KorSciBERT/word/graph_concat_coarse_alpha") # max_seq_length: 160   # acc: 89.88, F1: 90.17
-
-    # cli_parser.add_argument("--output_dir", type=str, default="./KorSciBERT/ablation/no_coarse/graph_concat")
-    # cli_parser.add_argument("--output_dir", type=str, default="./KorSciBERT/ablation/only_LabelAttn/again")
-    # cli_parser.add_argument("--output_dir", type=str, default="./KorSciBERT/ablation/only_LabelAttn/layer2_graph_concat_coarse_alpha")
-    # cli_parser.add_argument("--output_dir", type=str, default="./KorSciBERT/ablation/HierarchicalAttn/origin1")
-    # cli_parser.add_argument("--output_dir", type=str, default="./KorSciBERT/ablation/wo_LabelAttn/again")
-
-    cli_parser.add_argument("--output_dir", type=str, default="./KorSciBERT/baseline/merge_origin_preprocess_woCNJ")
-
-    # #------------------------------------------------------------------------------------------------------------
-    # # BERT
-    # cli_parser.add_argument("--model_name_or_path", type=str, default='./bert/init_weight')
-    # cli_parser.add_argument("--cache_dir", type=str, default='./bert/init_weight')
-    # cli_parser.add_argument("--output_dir", type=str, default="./bert/graph")
-    # # ------------------------------------------------------------------------------------------------------------
-    # # RoBERTa
-    # cli_parser.add_argument("--model_name_or_path", type=str, default='./roberta/init_weight')
-    # cli_parser.add_argument("--cache_dir", type=str, default='./roberta/init_weight')
-    # cli_parser.add_argument("--output_dir", type=str, default="./roberta/graph")
-    # # ------------------------------------------------------------------------------------------------------------
-
+    cli_parser.add_argument("--output_dir", type=str, default="./KorSciBERT/cls/graph_concat_coarse_alpha_again") # acc: 89.94, F1: 90.22
+   
     cli_parser.add_argument("--max_sentence_length", type=int, default=110)
 
     # https://github.com/KLUE-benchmark/KLUE-baseline/blob/main/run_all.sh
@@ -266,14 +210,13 @@ if __name__ == '__main__':
     cli_parser.add_argument("--no_cuda", type=bool, default=False)
 
     # Running Mode
-    cli_parser.add_argument("--from_init_weight", type=bool, default= False) #True)
-    cli_parser.add_argument("--add_vocab", type=bool, default=False)
+    cli_parser.add_argument("--from_init_weight", type=bool, default= True) #False) #True)
     cli_parser.add_argument("--checkpoint", type=str, default="4")
     cli_parser.add_argument("--coarse_add", type=bool, default=True)
 
-    cli_parser.add_argument("--do_train", type=bool, default= False) #True)
+    cli_parser.add_argument("--do_train", type=bool, default= True) #False) #True)
     cli_parser.add_argument("--do_eval", type=bool, default=False)
-    cli_parser.add_argument("--do_predict", type=bool, default= True) #False)
+    cli_parser.add_argument("--do_predict", type=bool, default= False) #True) #False)
 
     cli_args = cli_parser.parse_args()
 
