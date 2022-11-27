@@ -1,0 +1,15 @@
+numpy
+pandas
+tokenizers
+attrdict
+fastprogress
+tqdm
+pytorch-crf
+scikit-learn
+tensorflow-gpu==1.15.0
+transformers==4.7.0
+konlpy
+tweepy==3.10.0
+torch==1.8.1+cu111
+dgl==0.6.1
+dgl-cu110==0.6.1
