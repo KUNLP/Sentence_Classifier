@@ -175,7 +175,7 @@ if __name__ == '__main__':
     # KorSciBERT
     cli_parser.add_argument("--model_name_or_path", type=str, default='./KorSciBERT/model')
     cli_parser.add_argument("--cache_dir", type=str, default='./KorSciBERT/model')
-    cli_parser.add_argument("--output_dir", type=str, default="./KorSciBERT/cls/graph_concat_coarse_alpha_again") # acc: 89.94, F1: 90.22
+    cli_parser.add_argument("--output_dir", type=str, default="./KorSciBERT/cls/graph_concat_coarse_alpha") # acc: 89.94, F1: 90.22
    
     cli_parser.add_argument("--max_sentence_length", type=int, default=110)
 
