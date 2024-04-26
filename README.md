@@ -10,7 +10,7 @@ $ source venv/bin/activate
 $ pip install -r requirements.txt
 ```
 
-All code only supports running on Linux.
+All code only supports running on Linux..
 
 ## Model Structure
 
