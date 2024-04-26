@@ -1,6 +1,6 @@
 # Dual-Classification of Scientific Paper Sentence
 1213
-Code for paper: Pap4er Sentence Rhetorical Classification Model using Label Embeddings and Dependency Parser
+Code for paper: Paper Sentence Rhetorical Classification Model using Label Embeddings and Dependency Parser
 
 ## Setting up the code environment
 
