@@ -1,5 +1,5 @@
 # Dual-Classification of Scientific Paper Sentence
-121
+12
 Code for paper: Paper Sentence Rhetorical Classification Model using Label Embeddings and Dependency Parser
 
 ## Setting up the code environment
