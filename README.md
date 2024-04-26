@@ -20,7 +20,7 @@ All code only supports running on Linux.
 
 ## Data
 
-[국내 논문 문장 의미 태깅 데이터셋](https://aida.kisti.re.kr/data/8d0fd6f4-4bf9-47ae-bd71-7d41f01ad9a6)
+*[국내 논문 문장 의미 태깅 데이터셋](https://aida.kisti.re.kr/data/8d0fd6f4-4bf9-47ae-bd71-7d41f01ad9a6)*
 
 ### Directory and Pre-processing
 `의존 구문 분석 모델은 미공개(The dependency parser model is unpublished)`
